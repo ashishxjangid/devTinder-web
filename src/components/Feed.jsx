@@ -10,33 +10,33 @@ const Feed = () => {
   const dispatch = useDispatch();
 
   const getFeed = async () => {
-    if (feed) return;
+    if (feed !== null) return; // only skip if we already have data
     try {
       const res = await axios.get(BASE_URL + "/user/feed", {
         withCredentials: true,
       });
-      dispatch(addFeed(res?.data?.data));
-      console.log("Redux feed:", feed);
-
+      console.log("FEED API RESPONSE:", res.data);
+      dispatch(addFeed(res.data)); // res.data is the array
     } catch (err) {
-      //TODO: handle error
+      console.error("Feed fetch error:", err);
     }
   };
 
   useEffect(() => {
     getFeed();
   }, []);
-  if (!feed) return;
 
-  if (feed.length <= 0)
-    return <h1 className="flex justify-center my-10">No new users founds!</h1>;
+  if (!feed)
+    return <h1 className="flex justify-center my-10">Loading...</h1>;
+
+  if (feed.length === 0)
+    return <h1 className="flex justify-center my-10">No new users found!</h1>;
 
   return (
-    feed && (
-      <div className="flex justify-center my-10">
-        <UserCard user={feed[0]} />
-      </div>
-    )
+    <div className="flex flex-wrap justify-center gap-6 my-10">
+      <UserCard user={feed[0]} />
+    </div>
   );
 };
+
 export default Feed;
