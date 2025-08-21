@@ -11,6 +11,10 @@ import Requests from "./components/Requests";
 function App() {
   return (
     <>
+    <div
+      className="min-h-screen bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: "url('https://blog.1a23.com/wp-content/uploads/sites/2/2020/02/Desktop.png')" }}
+    >
       <Provider store={appStore}>
         <BrowserRouter basename="/">
           <Routes>
@@ -24,6 +28,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </Provider>
+    </div>  
     </>
   )
 }
